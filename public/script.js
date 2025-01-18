@@ -49,7 +49,7 @@ const UI = {
         this.elements.ingredientsList.innerHTML = '';
         ingredients.forEach((ingredient, index) => {
             const div = this.createIngredientItem(
-                ingredient, 
+                ingredient,
                 state.selectedIngredients.has(ingredient)
             );
             div.style.animationDelay = `${index * 50}ms`;
@@ -87,7 +87,7 @@ const UI = {
         state.selectedIngredients.delete(ingredient);
         this.updateSelectedIngredientsList();
         this.removePriceItem(ingredient);
-        
+
         const ingredientElements = document.querySelectorAll('.ingredient-item');
         ingredientElements.forEach(el => {
             if (el.textContent === ingredient) {
@@ -111,7 +111,7 @@ const UI = {
     displayPrices(ingredient, prices) {
         const ingredientWithoutEmoji = ingredient.replace(/^[^\s]+\s/, '');
         let container = document.getElementById(`price-${ingredientWithoutEmoji}`);
-        
+
         if (!container) {
             container = document.createElement('div');
             container.id = `price-${ingredientWithoutEmoji}`;
@@ -119,7 +119,7 @@ const UI = {
             container.style.opacity = '0';
             container.style.transform = 'translateX(20px)';
             this.elements.pricesList.appendChild(container);
-            
+
             setTimeout(() => {
                 container.style.opacity = '1';
                 container.style.transform = 'translateX(0)';
@@ -159,7 +159,7 @@ const UI = {
             <span>${message}</span>
         `;
         document.body.appendChild(toast);
-        
+
         setTimeout(() => toast.classList.add('show'), 100);
         setTimeout(() => {
             toast.classList.remove('show');
@@ -170,7 +170,7 @@ const UI = {
     displayRecipe(recipe) {
         this.elements.recipeSection.style.opacity = '0';
         this.elements.recipeSection.style.display = 'block';
-        
+
         document.getElementById('recipeName').textContent = recipe.receptoPavadinimas;
         document.getElementById('prepTime').innerHTML = `<i class="far fa-clock"></i> ${recipe.gaminimoLaikas}`;
         document.getElementById('difficulty').innerHTML = `<i class="fas fa-chart-line"></i> ${recipe.sudetingumas}`;
@@ -214,7 +214,7 @@ async function handleGenerateRecipe() {
         });
 
         const data = await response.json();
-        
+
         if (data.error) throw new Error(data.error);
         if (data.rawText) {
             console.error('Raw text received:', data.rawText);
@@ -240,7 +240,7 @@ function shareOnFacebook() {
     const recipe = document.getElementById('recipeName').textContent;
     const url = encodeURIComponent(window.location.href);
     window.open(
-        `https://www.facebook.com/sharer/sharer.php?u=${url}&quote=Pažiūrėk šį receptą: ${recipe}`,
+        `https://www.facebook.com/sharer/sharer.php?u=${url}"e=Pažiūrėk šį receptą: ${recipe}`,
         '_blank',
         'width=600,height=400'
     );
@@ -264,13 +264,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         const response = await fetch('/api/ingredients');
         const ingredients = await response.json();
-        
+
         UI.displayIngredients(ingredients[state.currentCategory]);
 
         // Setup category buttons
         document.querySelectorAll('.category-btn').forEach(button => {
             button.addEventListener('click', () => {
-                document.querySelectorAll('.category-btn').forEach(btn => 
+                document.querySelectorAll('.category-btn').forEach(btn =>
                     btn.classList.remove('active')
                 );
                 button.classList.add('active');
@@ -291,7 +291,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 const filtered = Object.values(ingredients)
                     .flat()
-                    .filter(ingredient => 
+                    .filter(ingredient =>
                         ingredient.toLowerCase().includes(searchTerm)
                     );
                 UI.displayIngredients(filtered);
