@@ -134,7 +134,7 @@ app.get('/api/prices/:ingredient', async (req, res) => {
     try {
         const ingredient = req.params.ingredient;
         const ingredientWithoutEmoji = ingredient.replace(/^[^\s]+\s/, '');
-        
+
         // Check cache first
         const cachedPrices = priceCache.get(ingredientWithoutEmoji);
         if (cachedPrices && cachedPrices.timestamp > Date.now() - CACHE_DURATION) {
@@ -184,7 +184,7 @@ app.post('/api/generate-recipe', async (req, res) => {
 
         const prompt = `
             Sukurk receptą naudojant šiuos ingredientus: ${ingredients.join(', ')}.
-            
+
             Atsakymą pateik JSON formatu:
             {
                 "receptoPavadinimas": "Patiekalo pavadinimas",
@@ -194,26 +194,26 @@ app.post('/api/generate-recipe', async (req, res) => {
                 "instrukcijos": ["1 žingsnis", "2 žingsnis"],
                 "patarimai": ["patarimas 1", "patarimas 2"]
             }
-            
+
             Svarbu: pateik tik gryną JSON, be jokių papildomų simbolių ar markdown formatavimo.
         `;
 
         const result = await model.generateContent(prompt);
         const response = result.response;
         let recipeText = response.text();
-        
+
         // Clean up the response text
         recipeText = recipeText.replace(/```json\n?/, '').replace(/```\n?/, '').trim();
-        
+
         try {
             const recipe = JSON.parse(recipeText);
             res.json(recipe);
         } catch (parseError) {
             console.error('JSON parsing error:', parseError);
             console.log('Received text:', recipeText);
-            res.status(500).json({ 
-                error: 'Failed to parse recipe', 
-                rawText: recipeText 
+            res.status(500).json({
+                error: 'Failed to parse recipe',
+                rawText: recipeText
             });
         }
     } catch (error) {
