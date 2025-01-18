@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtuvės Šefas - Receptų Generatorius</title>
+    <meta name="description" content="AI pagrindu veikiantis receptų generatorius su kainų palyginimu">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Comfortaa:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="nav-container">
+            <div class="branding">
+                <div class="logo-group">
+                    <i class="fas fa-utensils"></i>
+                    <span class="logo">Virtuvės Šefas</span>
+                </div>
+                <div class="text-group">
+                    <div class="tagline">Jūsų asmeninis AI virtuvės pagalbininkas</div>
+                    <div class="description">Generuokite receptus iš turimų produktų ir palyginkite kainas populiariausiose parduotuvėse</div>
+                </div>
+            </div>
+            <div class="nav-controls">
+                <a href="https://www.patreon.com/VirtuvesAI" target="_blank" class="btn btn-primary patreon-btn">
+                    <i class="fab fa-patreon"></i>
+                    Paremti projektą
+                </a>
+                <button id="themeToggle" class="btn theme-btn">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <aside class="categories-sidebar card">
+            <h3 class="heading">Kategorijos</h3>
+            <button class="category-btn active" data-category="darzoves">
+                <i class="fas fa-carrot"></i>
+                Daržovės
+            </button>
+            <button class="category-btn" data-category="vaisiai">
+                <i class="fas fa-apple-alt"></i>
+                Vaisiai
+            </button>
+            <button class="category-btn" data-category="baltymai">
+                <i class="fas fa-drumstick-bite"></i>
+                Baltymai
+            </button>
+            <button class="category-btn" data-category="pieno_produktai">
+                <i class="fas fa-cheese"></i>
+                Pieno produktai
+            </button>
+            <button class="category-btn" data-category="grudai">
+                <i class="fas fa-bread-slice"></i>
+                Grūdai
+            </button>
+            <button class="category-btn" data-category="kiti_produktai">
+                <i class="fas fa-pepper-hot"></i>
+                Kiti produktai
+            </button>
+        </aside>
+
+        <main class="content card">
+            <div class="search-bar">
+                <input type="text" placeholder="Ieškoti ingredientų...">
+                <button class="btn btn-primary">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+
+            <div class="ingredients-grid" id="ingredientsList"></div>
+
+            <div class="shopping-cart card">
+                <h3 class="heading">
+                    <i class="fas fa-shopping-basket"></i>
+                    Pasirinkti ingredientai
+                </h3>
+                <div id="selectedIngredientsList" class="cart-items"></div>
+                <button id="generateRecipe" class="btn btn-primary generate-btn">
+                    <i class="fas fa-magic"></i>
+                    Generuoti receptą
+                </button>
+            </div>
+
+            <div class="recipe-card card hidden" id="recipeSection">
+                <h2 id="recipeName" class="heading"></h2>
+                <div class="recipe-meta">
+                    <span id="prepTime"><i class="far fa-clock"></i></span>
+                    <span id="difficulty"><i class="fas fa-chart-line"></i></span>
+                </div>
+                <div class="recipe-content">
+                    <div class="recipe-ingredients">
+                        <h3 class="heading">
+                            <i class="fas fa-list"></i>
+                            Ingredientai
+                        </h3>
+                        <ul id="recipeIngredients"></ul>
+                    </div>
+                    <div class="recipe-instructions">
+                        <h3 class="heading">
+                            <i class="fas fa-tasks"></i>
+                            Gaminimo eiga
+                        </h3>
+                        <ol id="recipeInstructions"></ol>
+                    </div>
+                    <div class="recipe-tips">
+                        <h3 class="heading">
+                            <i class="fas fa-lightbulb"></i>
+                            Patarimai
+                        </h3>
+                        <ul id="recipeTips"></ul>
+                    </div>
+                </div>
+                <div class="social-share">
+                    <h3 class="heading">
+                        <i class="fas fa-share-alt"></i>
+                        Dalintis receptu
+                    </h3>
+                    <div class="share-buttons">
+                        <button onclick="shareOnFacebook()" class="share-btn facebook">
+                            <i class="fab fa-facebook"></i>
+                            Facebook
+                        </button>
+                        <button onclick="shareOnTwitter()" class="share-btn twitter">
+                            <i class="fab fa-twitter"></i>
+                            Twitter
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <aside class="prices-sidebar card">
+            <h3 class="heading">
+                <i class="fas fa-tags"></i>
+                Kainos parduotuvėse
+            </h3>
+            <div id="pricesList" class="prices-list"></div>
+        </aside>
+    </div>
+
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-emoji"></div>
+        <div class="loading-text">Generuojamas receptas...</div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
